@@ -37,8 +37,7 @@ void outputUser(User a)
 {
 	cout << a.username << " " << a.password << endl;
 }
-
-
+//has user in the system?
 bool hasUser(User a, int x)
 {
 	ifstream file;
@@ -102,6 +101,6 @@ void sighUp(int k)
 void viewProfile(int x) {
 	if (x == 1) {
 		cout << "----------Student's profile infomation----------" << endl;
-		cout <<"No: "<<
+		cout << "No: " << endl;
 	}
 }

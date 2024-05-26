@@ -281,9 +281,10 @@ void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course co
 		writeFile << course.student[i].no << "," << course.student[i].studentId << "," << course.student[i].firstName << "," << course.student[i].lastName << "," << course.student[i].gender << "," << course.student[i].dateOfBirth.day << "/" << course.student[i].dateOfBirth.month << "/" << course.student[i].dateOfBirth.year << "," << course.student[i].socialId << "," << course.student[i].yearNumber << endl;
 		cout << course.student[i].no << "," << course.student[i].studentId << "," << course.student[i].firstName << "," << course.student[i].lastName << "," << course.student[i].gender << "," << course.student[i].dateOfBirth.day << "/" << course.student[i].dateOfBirth.month << "/" << course.student[i].dateOfBirth.year << "," << course.student[i].socialId << "," << course.student[i].yearNumber << endl;
 	}
-
 	writeFile.close();
 }
+
+//14. View a list of his/her courses. He/she will study these courses in this semester.
 
 // 15. View a list of classes.
 void viewListOfClass(Classes* cls, int numOfClass)

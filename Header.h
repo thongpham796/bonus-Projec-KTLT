@@ -16,16 +16,7 @@ struct User
 	string username;
 	string password;
 };
-struct StudentUser {
-	string username;
-	string password;
-	Student st;
-};
-struct StaffUser {
-	string username;
-	string password;
-	AcademicStaff as;
-};
+
 struct Date {
 	int day, month, year;
 };
