@@ -114,4 +114,5 @@ void addStudentToCourse(Course& course);
 void viewListOfClass(Classes* cls, int numOfClass);
 void viewStudentOfClass(Classes cls);
 
+void exportListOfStudentToCsvFile(const char* file, Course course);
 #endif
