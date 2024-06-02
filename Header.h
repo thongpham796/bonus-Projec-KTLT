@@ -49,6 +49,15 @@ struct Session {
 	string classPeriod;	//Ex: S1(7:30), S2(9:30),...
 };
 
+//Create scoreboard of a student
+struct Point {
+	Student s;
+	double homework;
+	double midterm;
+	double final;
+	double total = homework * 20 / 100 + midterm * 30 / 100 + final * 50 / 100;
+};
+
 //Create list of courses
 struct Course {
 	int courseId;
@@ -60,7 +69,7 @@ struct Course {
 	int dayOfWeek;
 	Session session;
 	int numOfStudent;
-	Student* student;
+	Point *scoreboard;
 };
 struct Node {
 	Course course;
@@ -115,4 +124,6 @@ void viewListOfClass(Classes* cls, int numOfClass);
 void viewStudentOfClass(Classes cls);
 
 void exportListOfStudentToCsvFile(const char* file, Course course);
+void importScoreboard(const char* file, List*& listofcourse);
+void viewScoreboard(Course course);
 #endif
