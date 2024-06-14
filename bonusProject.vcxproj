@@ -131,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AtTheBeginningOfASemester.cpp" />
+    <ClCompile Include="AtTheEndOfASemester.cpp" />
     <ClCompile Include="LogIn.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

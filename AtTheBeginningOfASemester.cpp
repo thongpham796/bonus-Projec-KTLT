@@ -184,7 +184,7 @@ Node* createNode() {
 	cin >> crs.session.classPeriod;
 
 	crs.numOfStudent = 0;
-	crs.student = NULL;
+	crs.scoreboard = NULL;
 
 	tmp->course = crs;
 	tmp->pNext = NULL;
@@ -258,13 +258,13 @@ void addStudentToCourse(Course& course) {
 	int n = course.numOfStudent + 1;
 	Student* tmp = new Student[n];
 	for (int i = 0; i < n - 1; i++) {
-		tmp[i] = course.student[i];
+		tmp[i] = course.scoreboard[i].s;
 	}
 	tmp[n - 1] = st;
 	course.numOfStudent++;
-	course.student = new Student[course.numOfStudent];
+	course.scoreboard = new Point[course.numOfStudent];
 	for (int i = 0; i < course.numOfStudent; i++) {
-		course.student[i] = tmp[i];
+		course.scoreboard[i].s = tmp[i];
 	}
 }
 
@@ -278,8 +278,8 @@ void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course co
 	}
 	writeFile << course.numOfStudent << endl;
 	for (int i = 0; i < course.numOfStudent; i++) {
-		writeFile << course.student[i].no << "," << course.student[i].studentId << "," << course.student[i].firstName << "," << course.student[i].lastName << "," << course.student[i].gender << "," << course.student[i].dateOfBirth.day << "/" << course.student[i].dateOfBirth.month << "/" << course.student[i].dateOfBirth.year << "," << course.student[i].socialId << "," << course.student[i].yearNumber << endl;
-		cout << course.student[i].no << "," << course.student[i].studentId << "," << course.student[i].firstName << "," << course.student[i].lastName << "," << course.student[i].gender << "," << course.student[i].dateOfBirth.day << "/" << course.student[i].dateOfBirth.month << "/" << course.student[i].dateOfBirth.year << "," << course.student[i].socialId << "," << course.student[i].yearNumber << endl;
+		writeFile << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
+		cout << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
 	}
 	writeFile.close();
 }
