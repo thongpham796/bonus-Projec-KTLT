@@ -42,13 +42,22 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="listStudents.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="1st-yearStudents.txt">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="studentInCourse.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="listStudents23CTT5.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="listStudents23CTT3.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="listStudents23CTT4.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="studentInCourse23A001.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

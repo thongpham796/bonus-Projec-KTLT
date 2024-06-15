@@ -72,3 +72,17 @@ void viewScoreboard(Course course)
 		cout << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << " " << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << ',' << course.scoreboard[i].homework << ',' << course.scoreboard[i].midterm << ',' << course.scoreboard[i].final << ',' << course.scoreboard[i].total << endl;
 
 }
+
+void updateResult(Point &s)
+{
+	cout << "Input new point: \n";
+	cout << "Input homework point: ";
+	cin >> s.homework;
+	cout << "Input midterm point: ";
+	cin >> s.midterm;
+	cout << "Input final point: ";
+	cin >> s.final;
+	s.total = s.homework * 20 / 100 + s.midterm * 30 / 100 + s.final * 50 / 100;
+	cout << "Total point: " << s.total;
+}
+

@@ -274,19 +274,69 @@ void addStudentToCourse(Course& course) {
 }
 
 //8. Then he/she will upload a CSV file, containing a list of students enrolled in the course.
-void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course) {
-	ofstream writeFile;
-	writeFile.open(fileName, ios::app);
-	if (!writeFile.is_open()) {
-		cout << "File \"" << fileName << " \" error!" << endl;
+void uploadCSVFileContainingListStudentInCourse(const char* fileName, Semester &sem)
+{
+	ifstream file;
+	file.open(fileName);
+	if (!file.is_open())
+	{
+		cout << "File error !!" << endl;
 		return;
 	}
-	writeFile << course.numOfStudent << endl;
-	for (int i = 0; i < course.numOfStudent; i++) {
-		writeFile << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
-		cout << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
+	string temp;
+	getline(file, temp);
+	stringstream linetemp(temp);
+	string courseid;
+	getline(linetemp, courseid, ',');
+	int numOfStudent;
+	string num;
+	getline(linetemp, num, ',');
+	numOfStudent = stoi(num);
+	int i = 0;
+	Node* course = sem.listOfCourse.pHead;
+	while (course !=NULL)
+	{
+		if (course->course.courseId==courseid)
+		{
+			course->course.scoreboard = new Point[numOfStudent];
+			string line;
+			int j = 0;
+			while (getline(file, line))
+			{
+				stringstream linestream(line);
+				string value;
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.no = stoi(value);
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.studentId = stoi(value);
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.firstName = value;
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.lastName = value;
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.gender = value;
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.dateOfBirth.day = stoi(value);
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.dateOfBirth.month = stoi(value);
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.dateOfBirth.year = stoi(value);
+				getline(linestream, value, ',');
+				course->course.scoreboard[j].s.socialId = value;
+				getline(linestream, value, ' ');
+				course->course.scoreboard[j].s.yearNumber = stoi(value);
+				j++;
+			}
+			course->course.numOfStudent = j;
+			file.close();
+			cout << "Write file successful!!" << endl;
+			return;
+		}
+		course = course->pNext;
 	}
-	writeFile.close();
+	cout << "The class doesn't exist!!" << endl;
+	file.close();
+	return;
 }
 
 //14. View a list of his/her courses. He/she will study these courses in this semester.

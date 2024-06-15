@@ -110,7 +110,7 @@ struct Point {
 
 //Create list of courses
 struct Course {
-	int courseId;
+	string courseId;
 	string courseName;
 	string className;
 	string teacherName;
@@ -119,7 +119,6 @@ struct Course {
 	int dayOfWeek;
 	Session session;
 	int numOfStudent;
-	Student* student;
 	Point* scoreboard;
 };
 struct Node {
@@ -169,8 +168,9 @@ void addStudentToCourse(Course& course);
 void viewListOfClass(Classes* cls, int numOfClass);
 void viewStudentOfClass(Classes cls);
 
-void exportListStudentInCourseToCSVFile(const char fileName[], List listOfCourses);
+void exportListOfStudentToCsvFile(const char* file, Course course);
 void importScoreboard(const char* file, List*& listofcourse);
 void viewScoreboard(Course course);
+void updateResult(Point& s);
 
 #endif

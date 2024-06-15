@@ -73,7 +73,9 @@ int main()
 							Classes* cls;
 							int num = 0;
 							createSeveralClasses(cls, num);
-							addStudentToClassesFromCsvFile("listStudents.csv", cls, num);
+							addStudentToClassesFromCsvFile("listStudents23CTT3.csv", cls, num);
+							addStudentToClassesFromCsvFile("listStudents23CTT4.csv", cls, num);
+							addStudentToClassesFromCsvFile("listStudents23CTT5.csv", cls, num);
 							viewListOfClass(cls, num);
 							for (int i = 0; i < num; i++)
 							{
