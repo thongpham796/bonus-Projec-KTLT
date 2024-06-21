@@ -60,36 +60,32 @@ struct Point {
 
 //Create list of courses
 struct Course {
-	int courseId;
+	string courseId;
 	string courseName;
 	string className;
 	string teacherName;
 	int numberOfCredit;
 	int maximumNumberOfStudent = 50;
-	int dayOfWeek;
+	string dayOfWeek;
 	Session session;
-	int numOfStudent;
-	Point *scoreboard;
+	int numOfStudent = 0;
+	Point *scoreboard = NULL;
 };
-struct Node {
+struct CourseNode {
 	Course course;
-	Node* pNext;
+	CourseNode* pNext;
 };
-struct List {
-	Node* pHead;
+struct CourseList {
+	CourseNode* pHead;
 };
 struct Semester {
 	int semOrdiNum; // semester ordinal number
 	string schoolYear;
 	Date startDate;
 	Date endDate;
-	List listOfCourse;
+	CourseList listOfCourse;
 };
 
-struct schoolYear {
-	string nameOfSY;
-	List semesters;
-};
 User inputUser(int x);
 bool hasUser(User a, int x);
 void outputUser(User a);
@@ -106,24 +102,33 @@ void viewProfile(User a);
 // Student sẽ xuất như sau: 
 // 1 hàm để đọc dữ liệu trong csv
 
+//At the beginning of a school year (often in September)
 string createSchoolYear();
 void createSeveralClasses(Classes*& cls, int& numOfClasses);
 void addStudentToCSVFile(const char* fileName, Student st);
 void addNewStudentToClasses();
 void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numOfClasses);
 
+//At the beginning of a semester
 Semester createSemester();
-Node* createNode();
-void addAfterCourseList(List& lst, Node* node);
+CourseNode* createCourseNode();
+void addAfterCourseList(CourseList& lst, CourseNode* node);
 void addCourseToSemester(Semester& sem);
 
 void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course);
-void addStudentToCourse(Course& course);
+void viewListOfCourse(CourseList listOfCourse);
+void addStudentToCourse(CourseList& listOfCourse);
+void updateCourseInfo(CourseList& listOfCourse);
+void removeStudentFromStudentArr(Point*& scoreboard, int n, int pos);
+void removeStudentFromCourse(CourseList& listOfCourse);
+void deleteACourse(CourseList& listOfCourse);
 
 void viewListOfClass(Classes* cls, int numOfClass);
 void viewStudentOfClass(Classes cls);
 
+//At the end of a semester
 void exportListOfStudentToCsvFile(const char* file, Course course);
-void importScoreboard(const char* file, List*& listofcourse);
+void importScoreboard(const char* file, CourseList& listofcourse);
 void viewScoreboard(Course course);
+
 #endif

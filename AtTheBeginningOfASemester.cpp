@@ -164,19 +164,23 @@ Semester createSemester() {
 //the week, and the session that the course will be performed(MON / TUE / WED / THU /
 //	FRI / SAT, S1(07:30), S2(09:30), S3(13:30) and S4(15:30)).A course will be taught in
 //	only one session in a week.
-Node* createNode() {
-	Node* tmp = new Node;
+CourseNode* createCourseNode() {
+	CourseNode* tmp = new CourseNode;
 	Course crs;
 	cout << "Course id: ";
 	cin >> crs.courseId;
 	cout << "Course name: ";
 	cin >> crs.courseName;
 	cout << "Class name: ";
+	cin >> crs.className;
+	cout << "Teacher name: ";
 	cin >> crs.teacherName;
 	cout << "Number of credits: ";
 	cin >> crs.numberOfCredit;
 	cout << "The maximum number of students in course: ";
 	cin >> crs.maximumNumberOfStudent;
+	cout << "Day of the week: ";
+	cin >> crs.dayOfWeek;
 	cout << "The session that the course will be performed: " << endl;
 	cout << "Day of the week the course will be performed (Ex: MON, TUE,...): ";
 	cin >> crs.session.dayOfWeek;
@@ -191,12 +195,12 @@ Node* createNode() {
 	return tmp;
 }
 
-void addAfterCourseList(List& lst, Node* node) {
+void addAfterCourseList(CourseList& lst, CourseNode* node) {
 	if (lst.pHead == NULL) {
 		lst.pHead = node;
 	}
 	else {
-		Node* tmp = lst.pHead;
+		CourseNode* tmp = lst.pHead;
 		while (tmp->pNext != NULL) {
 			tmp = tmp->pNext;
 		}
@@ -206,17 +210,17 @@ void addAfterCourseList(List& lst, Node* node) {
 
 void addCourseToSemester(Semester& sem) {
 	cout << "Enter a new course to semester: " << endl;
-	Node* node = createNode();
+	CourseNode* node = createCourseNode();
 	if (sem.listOfCourse.pHead == NULL) {
 		sem.listOfCourse.pHead = node;
 	}
 	else {
-		Node* tmp = sem.listOfCourse.pHead;
+		CourseNode* tmp = sem.listOfCourse.pHead;
 		while (tmp != NULL) {
 			if ((tmp->course.session.dayOfWeek == node->course.session.dayOfWeek) && (tmp->course.session.classPeriod == node->course.session.classPeriod)) {
 				cout << "The session of the course you want to add is a duplicate of the session of the other course in the semester!!!" << endl;
 				cout << "Enter a other new course to semester: " << endl;
-				node = createNode();
+				node = createCourseNode();
 				tmp = sem.listOfCourse.pHead;
 			}
 			else {
@@ -229,11 +233,137 @@ void addCourseToSemester(Semester& sem) {
 	cout << "The course is successfully added to the semester!" << endl;
 }
 
+//8. Then he/she will upload a CSV file, containing a list of students enrolled in the course.
+void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course) {
+	ofstream writeFile;
+	writeFile.open(fileName, ios::app);
+	if (!writeFile.is_open()) {
+		cout << "File \"" << fileName << " \" error!" << endl;
+		return;
+	}
+	writeFile << course.numOfStudent << endl;
+	for (int i = 0; i < course.numOfStudent; i++) {
+		writeFile << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
+		cout << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
+	}
+	writeFile.close();
+}
+
+//9. View list of course
+void viewListOfCourse(CourseList listOfCourse) {
+	if (listOfCourse.pHead == NULL) {
+		cout << "The course list in this semester is empty!" << endl;
+		return;
+	}
+	else {
+		cout << "List of course in this semester: " << endl;
+		CourseNode* tmp = listOfCourse.pHead;
+		while (tmp != NULL) {
+			cout << "Course name: " << tmp->course.courseName << endl;
+			cout << "Course id: " << tmp->course.courseId << endl;
+			cout << "Class name: " << tmp->course.className << endl;
+			cout << "Teacher name: " << tmp->course.teacherName << endl;
+			cout << "Number of credit: " << tmp->course.numberOfCredit << endl;
+			cout << "The maximum number of students in the course: " << tmp->course.maximumNumberOfStudent << endl;
+			cout << "Day of the week: " << tmp->course.dayOfWeek << endl;
+			cout << "The session that the course will be perform: " << tmp->course.session.dayOfWeek << " - " << tmp->course.session.classPeriod << endl;
+			cout << endl;
+			tmp = tmp->pNext;
+		}
+	}
+
+
+}
+
+//10. Update course information
+void updateCourseInfo(CourseList& listOfCourse) {
+	string id;
+
+	cout << "Enter the course id of the course you want to update information: ";
+	cin >> id;
+	CourseNode* tmp = listOfCourse.pHead;
+	while (tmp != NULL) {
+		if (tmp->course.courseId == id) {
+			while (1) {
+				int choice;
+				cout << "Which information do you want to update?" << endl;
+				cout << "1. Course name." << endl;
+				cout << "2. Course id." << endl;
+				cout << "3. Class name." << endl;
+				cout << "4. Teacher name." << endl;
+				cout << "5. Number of credit. " << endl;
+				cout << "6. Maximum number of students in the course." << endl;
+				cout << "7. Day of the week." << endl;
+				cout << "8. The session that the course will be perform." << endl;
+				cout << "9. Exit." << endl;
+				cout << "Enter number: ";
+				cin >> choice;
+				if (choice == 1) {
+					cout << "The new course name: ";
+					cin >> tmp->course.courseName;
+					continue;
+				}
+				else if (choice == 2) {
+					cout << "The new course id: ";
+					cin >> tmp->course.courseId;
+					continue;
+				}
+				else if (choice == 3) {
+					cout << "The new class name: ";
+					cin >> tmp->course.className;
+					continue;
+				}
+				else if (choice == 4) {
+					cout << "The new teacher name: ";
+					cin >> tmp->course.teacherName;
+					continue;
+				}
+				else if (choice == 5) {
+					cout << "The new number of credit: ";
+					cin >> tmp->course.numberOfCredit;
+					continue;
+				}
+				else if (choice == 6) {
+					cout << "The new maximum number of student: ";
+					cin >> tmp->course.maximumNumberOfStudent;
+					continue;
+				}
+				else if (choice == 7) {
+					cout << "The new day of the week: ";
+					cin >> tmp->course.dayOfWeek;
+					continue;
+				}
+				else if (choice == 8) {
+					cout << "The new session: ";
+					cout << "Day of week: ";
+					cin >> tmp->course.session.dayOfWeek;
+					cout << "Class Period: ";
+					cin >> tmp->course.session.classPeriod;
+					continue;
+				}
+				else if (choice == 9) {
+					break;
+				}
+				else {
+					cout << "Our program doesn't support this option, please try again\n";
+					continue;
+				}
+			} 
+			break;
+		}
+		tmp = tmp->pNext;
+	}
+}
+
 
 //11. Add a student to the course.
-void addStudentToCourse(Course& course) {
+void addStudentToCourse(CourseList& listOfCourse) {
+	if (listOfCourse.pHead == NULL) {
+		cout << "The course you want to add student is not exist!!!";
+		return;
+	}
 	Student st;
-	cout << "Enter student: " << endl;
+	cout << "Enter student infomation: " << endl;
 	cout << "Enter No: ";
 	cin >> st.no;
 	cout << "Enter Student ID: ";
@@ -255,33 +385,98 @@ void addStudentToCourse(Course& course) {
 	cin >> st.socialId;
 	cout << "Enter yearNumber: ";
 	cin >> st.yearNumber;
-	int n = course.numOfStudent + 1;
-	Student* tmp = new Student[n];
-	for (int i = 0; i < n - 1; i++) {
-		tmp[i] = course.scoreboard[i].s;
+	string id;
+	cout << "Enter the course id of the course you want to add student: ";
+	cin >> id;
+	CourseNode* tmp = listOfCourse.pHead;
+	while (tmp != NULL) {
+		if (tmp->course.courseId == id) {
+			if (tmp->course.scoreboard == NULL) {
+				tmp->course.scoreboard = new Point[1];
+				tmp->course.scoreboard[0].s = st;
+				tmp->course.numOfStudent++;
+			}
+			else {
+				int n = tmp->course.numOfStudent + 1;
+				Student* tmpStu = new Student[n];
+				for (int i = 0; i < n - 1; i++) {
+					tmpStu[i] = tmp->course.scoreboard[i].s;
+				}
+				tmpStu[n - 1] = st;
+				tmp->course.numOfStudent++;
+				tmp->course.scoreboard = new Point[tmp->course.numOfStudent];
+				for (int i = 0; i < tmp->course.numOfStudent; i++) {
+					tmp->course.scoreboard[i].s = tmpStu[i];
+				}
+			}
+			return;
+		}
+		tmp = tmp->pNext;
 	}
-	tmp[n - 1] = st;
-	course.numOfStudent++;
-	course.scoreboard = new Point[course.numOfStudent];
-	for (int i = 0; i < course.numOfStudent; i++) {
-		course.scoreboard[i].s = tmp[i];
+	cout << "The course you want to add student is not exist!" << endl;
+}
+
+//12. Remove a student from a course with position users enter
+void removeStudentFromStudentArr(Point* &scoreboard, int n, int pos) {
+	for (int i = 0; i < n; i++) {
+		if (i == pos) {
+			for (int j = i; j < n-1; j++) {
+				scoreboard[j] = scoreboard[j + 1];
+			}
+			n--;
+		}
+	}
+}
+void removeStudentFromCourse(CourseList& listOfCourse) {
+	string crsId;
+	cout << "Enter the course id of the course you want to remove student: ";
+	cin >> crsId;
+	CourseNode* tmp = listOfCourse.pHead;
+	while (tmp != NULL) {
+		if (tmp->course.courseId == crsId) {
+			int stId;
+			cout << "Enter the student id of the student you want to remove from a course: ";
+			cin >> stId;
+			for (int i = 0; i < tmp->course.numOfStudent; i++) {
+				if (tmp->course.scoreboard[i].s.studentId == stId) {
+					removeStudentFromStudentArr(tmp->course.scoreboard, tmp->course.numOfStudent, stId);
+				}
+			}
+		}
+		tmp = tmp->pNext;
 	}
 }
 
-//8. Then he/she will upload a CSV file, containing a list of students enrolled in the course.
-void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course) {
-	ofstream writeFile;
-	writeFile.open(fileName, ios::app);
-	if (!writeFile.is_open()) {
-		cout << "File \"" << fileName << " \" error!" << endl;
+//13. Delete a course.
+void deleteACourse(CourseList& listOfCourse) {
+
+	if (listOfCourse.pHead == NULL) {
+		cout << "This course list is empty!" << endl;
 		return;
 	}
-	writeFile << course.numOfStudent << endl;
-	for (int i = 0; i < course.numOfStudent; i++) {
-		writeFile << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
-		cout << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << "," << course.scoreboard[i].s.dateOfBirth.day << "/" << course.scoreboard[i].s.dateOfBirth.month << "/" << course.scoreboard[i].s.dateOfBirth.year << "," << course.scoreboard[i].s.socialId << "," << course.scoreboard[i].s.yearNumber << endl;
+	string id;
+	cout << "Enter the course id of the course you want to delete: ";
+	cin >> id;
+	if (listOfCourse.pHead->course.courseId == id) {
+		CourseNode* tmp = listOfCourse.pHead;
+		listOfCourse.pHead = listOfCourse.pHead->pNext;
+		delete tmp;
+		tmp = NULL;
+	} else {
+ 		CourseNode* prev = listOfCourse.pHead;
+		CourseNode* tmp = listOfCourse.pHead->pNext;
+		while (tmp != NULL) {
+			if (tmp->course.courseId == id) {
+				prev->pNext = tmp->pNext;
+				delete tmp;
+				tmp = NULL;
+				return;
+			}
+			prev = tmp;
+			tmp = tmp->pNext;
+		}
+		cout << "The course you want to delete is not exist!" << endl;
 	}
-	writeFile.close();
 }
 
 //14. View a list of his/her courses. He/she will study these courses in this semester.
@@ -316,7 +511,7 @@ void viewStudentOfClass(Classes cls)
 }
 
 //19. Export a list of students in a course to a CSV file
-void exportListOfStudentsInCourseToCSVFile(const char fileName[], List listOfCourses) {
+void exportListOfStudentsInCourseToCSVFile(const char fileName[], CourseList listOfCourses) {
 	int no;
 	string schoolYear, id;
 	cout << "Some information of course you want to export to CSV file: ";
@@ -326,7 +521,7 @@ void exportListOfStudentsInCourseToCSVFile(const char fileName[], List listOfCou
 	cin >> no;
 	cout << "Enter course id: ";
 	cin >> id;
-	Node* tmp = listOfCourses.pHead;
+	CourseNode* tmp = listOfCourses.pHead;
 	while (tmp != NULL) {
 
 		tmp = tmp->pNext;
