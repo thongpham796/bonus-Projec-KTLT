@@ -86,3 +86,32 @@ void updateResult(Point &s)
 	cout << "Total point: " << s.total;
 }
 
+double findGPAOfAStudent(int MSSV, Semester sem)
+{
+	Node* temp = sem.listOfCourse.pHead;
+	int count = 0;
+	double point = 0;
+	for (; temp != NULL; temp = temp->pNext)
+	{
+		for (int i = 1; i < temp->course.numOfStudent; i++)
+		{
+			if (temp->course.scoreboard[i].s.studentId == MSSV)
+			{
+				cout << temp->course.courseName << ":";
+				cout << temp->course.scoreboard[i].total<<"  ";
+				point = point + temp->course.scoreboard[i].total;
+				count++;
+			}
+		}
+	}
+	return point / count;
+}
+
+void findGPAOfClass(Classes cls, Semester sem)
+{
+	for (int a = 1; a < cls.numOfStudent; a++)
+	{
+		cout<< findGPAOfAStudent(cls.student[a].studentId, sem);
+	}
+}
+
