@@ -19,6 +19,11 @@ void exportListOfStudentToCsvFile(const char* file, Course course)
 	wfile.close();
 }
 
+//20. Import the scoreboard of a course.A scoreboard will have at least the following
+//columns : No, Student ID, Student Full Name, Total Mark, Final Mark, Midterm Mark, and
+//Other Mark.(An academic staff member will export the list of students in a course, and
+//send the CSV file to the teacher, the teacher will enter student results in this file, send it
+//back to the staff, and then the staff will import the scoreboard to the system)
 void importScoreboard(const char* file, CourseList*& listofcourse)
 {
 	ifstream rfile;

@@ -59,9 +59,8 @@ void addStudentToCSVFile(const char* fileName, Student st) {
 	writeFile << st.no << "," << st.studentId << "," << st.firstName << "," << st.lastName << "," << st.gender << "," << st.dateOfBirth.day << "/" << st.dateOfBirth.month << "/" << st.dateOfBirth.year << "," << st.socialId << "," << st.yearNumber << endl;
 	writeFile.close();
 }
-void addNewStudentToClasses() {
+void addNewStudentToClasses(const char* fileName) {
 	Student st;
-	char fileName[] = "1st-yearStudents.txt";
 	addStudentToCSVFile(fileName, st);
 }
 
@@ -362,6 +361,9 @@ void addStudentToCourse(CourseList& listOfCourse) {
 		cout << "The course you want to add student is not exist!!!";
 		return;
 	}
+	string id;
+	cout << "Enter the course id of the course you want to add student: ";
+	cin >> id;
 	Student st;
 	cout << "Enter student infomation: " << endl;
 	cout << "Enter No: ";
@@ -385,9 +387,6 @@ void addStudentToCourse(CourseList& listOfCourse) {
 	cin >> st.socialId;
 	cout << "Enter yearNumber: ";
 	cin >> st.yearNumber;
-	string id;
-	cout << "Enter the course id of the course you want to add student: ";
-	cin >> id;
 	CourseNode* tmp = listOfCourse.pHead;
 	while (tmp != NULL) {
 		if (tmp->course.courseId == id) {
@@ -417,7 +416,7 @@ void addStudentToCourse(CourseList& listOfCourse) {
 }
 
 //12. Remove a student from a course with position users enter
-void removeStudentFromStudentArr(Point* &scoreboard, int n, int pos) {
+void removeStudentFromStudentArr(Point* &scoreboard, int& n, int pos) {
 	for (int i = 0; i < n; i++) {
 		if (i == pos) {
 			for (int j = i; j < n-1; j++) {
@@ -480,14 +479,34 @@ void deleteACourse(CourseList& listOfCourse) {
 }
 
 //14. View a list of his/her courses. He/she will study these courses in this semester.
+void viewListOfCourseByStudent(CourseList courseList, int id) {
+	if (courseList.pHead == NULL) {
+		cout << "Empty course list!!!" << endl;
+		return;
+	}
+	else {
+		cout << "List of courses you are learning: " << endl;
+		CourseNode* tmp = courseList.pHead;
+		while (tmp != NULL) {
+			for (int i = 0; i < tmp->course.numOfStudent; i++) {
+				if (tmp->course.scoreboard[i].s.studentId == id) {
+					cout << tmp->course.courseId << " - " << tmp->course.courseName << endl;
+				}
+			}
+			tmp = tmp->pNext;
+		}
+	}
+}
 
 // 15. View a list of classes.
-void viewListOfClass(Classes* cls, int numOfClass)
+void viewListOfClasses(Classes* cls, int numOfClass)
 {
 	cout << "List of classes: \n";
 	for (int i = 0; i < numOfClass; i++)
 	{
-		cout << "Class: " << cls[i].className << " Number of student: " << cls[i].numOfStudent << " Classyear: " << cls[i].yearNumber << endl;
+		cout << "Class: " << cls[i].className << endl;
+		cout << "Number of student: " << cls[i].numOfStudent << endl;
+		cout << "Classyear: " << cls[i].yearNumber << endl;
 	}
 }
 
@@ -510,20 +529,91 @@ void viewStudentOfClass(Classes cls)
 	}
 }
 
-//19. Export a list of students in a course to a CSV file
-void exportListOfStudentsInCourseToCSVFile(const char fileName[], CourseList listOfCourses) {
+//17.View a list of courses
+void viewListOfCourse(const char fileName[], CourseList courseList)
+{
+	ofstream writeFile;
+	writeFile.open(fileName, ios::app);
+	if (!writeFile.is_open()) {
+		cout << "File \"" << fileName << " \" error!" << endl;
+		return;
+	}
+	writeFile << "The list of courses: " << endl;
+	CourseNode* temp = courseList.pHead;
+	while (temp->pNext != NULL)
+	{
+		cout << "Course ID " << temp->course.courseId << endl;
+		cout << "Course Name: " << temp->course.courseName << endl;
+		cout << "Class Name: " << temp->course.className << endl;
+		cout << "Teacher Name :" << temp->course.teacherName << endl;
+		cout << "Number of Credit: " << temp->course.numberOfCredit << endl;
+		cout << "Session: " << temp->course.session.classPeriod << endl;
+		cout << "Day of week: " << temp->course.dayOfWeek << endl;
+		cout << "Number of student: " << temp->course.numOfStudent;
+		temp = temp->pNext;
+	}
+}
+
+//18. View a list of student of a course.
+void viewListOfStudentInCourse(CourseList courseList)
+{
+	string id;
+	cout << "Enter the course id of the course you want to view a list of student: ";
+	cin >> id;
+	CourseNode* tmp = courseList.pHead;
+	while (tmp != NULL) {
+		if (tmp->course.courseId == id) {
+			cout << "CourseName: " << tmp->course.courseName << endl;
+			cout << "CourseID: " << tmp->course.courseId << endl;
+			cout << "Name of class of Course: " << tmp->course.className << endl;
+			cout << "TeacherName: " << tmp->course.teacherName << endl;
+			cout << "The maximum number of students of Course: " << tmp->course.maximumNumberOfStudent << endl;
+			cout << "The credit number of students of Course: " << tmp->course.numberOfCredit << endl;
+			cout << "The number of students of Course: " << tmp->course.numOfStudent << endl;
+			cout << "Course Year: " << tmp->course.session.classPeriod << endl;
+			cout << "Day of Week: " << tmp->course.dayOfWeek << endl;
+			cout << "List od students in course: " << endl;
+			for (int i = 0; i < tmp->course.numOfStudent; i++) {
+				cout << "No: " << tmp->course.scoreboard->s.no << endl;
+				cout << "Student ID: " << tmp->course.scoreboard->s.studentId << endl;
+				cout << "FullName: " << tmp->course.scoreboard->s.firstName << " " << tmp->course.scoreboard->s.lastName << endl;
+				cout << "Gender: " << tmp->course.scoreboard->s.gender << endl;
+				cout << "BirthDay: " << tmp->course.scoreboard->s.dateOfBirth.day << "/" << tmp->course.scoreboard->s.dateOfBirth.month << "/" << tmp->course.scoreboard->s.dateOfBirth.year << endl;
+				cout << "SocialID: " << tmp->course.scoreboard->s.socialId << endl;
+				cout << "YearNumber: " << tmp->course.scoreboard->s.yearNumber << endl;
+				cout << "************************************************" << endl;
+
+			}
+			return;
+		}
+		tmp = tmp->pNext;
+	}
+}
+
+//19. Export a list of students in a course to a CSV file.
+void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse) {
 	int no;
-	string schoolYear, id;
+	string id;
 	cout << "Some information of course you want to export to CSV file: ";
-	cout << "Enter school year: ";
-	cin >> schoolYear;
 	cout << "Enter semester ordinal number in course: ";
 	cin >> no;
 	cout << "Enter course id: ";
 	cin >> id;
-	CourseNode* tmp = listOfCourses.pHead;
+	CourseNode* tmp = listOfCourse.pHead;
 	while (tmp != NULL) {
-
+		if (tmp->course.courseId == id) {
+			string fileName = "Student list - " + tmp->course.courseId + ".csv";
+			ofstream wfile;
+			wfile.open(fileName, ios::app);
+			if (!wfile.is_open()) {
+				cout << "File error!" << endl;
+				return;
+			}
+			wfile << "Student id" << "," << "Student name" << endl;
+			for (int i = 0; i < tmp->course.scoreboard[i].s.studentId; i++) {
+				wfile << tmp->course.scoreboard[i].s.studentId << "," << tmp->course.scoreboard[i].s.lastName << " " << tmp->course.scoreboard[i].s.lastName << endl;
+			}
+		}
 		tmp = tmp->pNext;
 	}
 }

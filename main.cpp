@@ -23,17 +23,23 @@ int main()
 
 				//2. Create several classes for 1st - year students. For example : class 20APCS1, class 20APCS2,
 				//class 20CLC1..., class 20CLC11, class 20VP...
-				/*Classes* cls;
+				Classes* cls;
 				int num = 0;
+				char fileName2[] = "listStudents.csv";
 				createSeveralClasses(cls, num);
-				addStudentToClassesFromCsvFile("listStudents.csv", cls, num);
-				viewListOfClass(cls, num);
+				addStudentToClassesFromCsvFile(fileName2, cls, num);
+				viewListOfClasses(cls, num);
 				for (int i = 0; i < num; i++)
 				{
 					viewStudentOfClass(cls[i]);
-				}*/
+				}
 				//3. Add new 1st year students to 1st-year classes.
-				//addNewStudentToClasses();
+				addNewStudentToClasses(fileName2);
+
+				//4. For quick input, he / she can import a CSV file containing all students in a specific class to
+				//the system, instead of adding one by one : No, Student ID, First name, Last name,
+				//Gender, Date of Birth, and Social ID.
+
 
 				//6. Create a semester: 1, 2, or 3, school year, start date, end date. Choose the school year
 				//	that the newly created semester belongs to.The created semester will be the current /
@@ -46,22 +52,19 @@ int main()
 				//FRI / SAT, S1(07:30), S2(09:30), S3(13:30) and S4(15:30)).A course will be taught in
 				//only one session in a week.
 				addCourseToSemester(sem);
-
-				/*char fileName[] = "studentInCourse.csv";
-				exportListOfStudentToCsvFile(fileName, sem.listOfCourse.pHead->course);
-				importScoreboard(fileName, sem.listOfCourse);
-				viewScoreboard(sem.listOfCourse.pHead->course);*/
+				addCourseToSemester(sem);
+				
 				//8. Then he/she will upload a CSV file, containing a list of students enrolled in the course.
-				char fileName[] = "studentInCourse.csv";
+				char fileName8[] = "studentInCourse.csv";
 				addStudentToCourse(sem.listOfCourse);
-				uploadCSVFileContainingListStudentInCourse(fileName, sem.listOfCourse.pHead->course);
+				uploadCSVFileContainingListStudentInCourse(fileName8, sem.listOfCourse.pHead->course);
 
 				//9. View the list of courses.
 				viewListOfCourse(sem.listOfCourse);				
 
 				//10. Update course information.
-				/*updateCourseInfo(sem.listOfCourse);
-				viewListOfCourse(sem.listOfCourse);*/
+				updateCourseInfo(sem.listOfCourse);
+				viewListOfCourse(sem.listOfCourse);
 
 				//11. Add a student to the course.
 				addStudentToCourse(sem.listOfCourse);
@@ -71,16 +74,23 @@ int main()
 				removeStudentFromCourse(sem.listOfCourse);
 				
 				//13. Delete a course.
-				/*deleteACourse(sem.listOfCourse);
-				viewListOfCourse(sem.listOfCourse);*/
+				deleteACourse(sem.listOfCourse);
+				viewListOfCourse(sem.listOfCourse);
 
 				//15. View a list of classes.
-				
+				viewListOfClasses(cls, num);
+
 				//16. View a list of students in a class (for example, 20APCS1...)
-			
+				viewStudentOfClass(cls[0]);
+
 				//17. View a list of courses.
+				viewListOfCourse(sem.listOfCourse);
 
 				//18. View a list of students in a course
+				viewListOfStudentInCourse(sem.listOfCourse);
+
+				//19. Export a list of students in a course to a CSV file
+
 			}
 			else if (a == 2) {
 

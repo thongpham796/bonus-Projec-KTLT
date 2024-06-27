@@ -103,32 +103,37 @@ void viewProfile(User a);
 // 1 hàm để đọc dữ liệu trong csv
 
 //At the beginning of a school year (often in September)
-string createSchoolYear();
-void createSeveralClasses(Classes*& cls, int& numOfClasses);
+string createSchoolYear(); //1
+void createSeveralClasses(Classes*& cls, int& numOfClasses);//2
 void addStudentToCSVFile(const char* fileName, Student st);
-void addNewStudentToClasses();
-void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numOfClasses);
+void addNewStudentToClasses(const char* fileName);//3
+void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numOfClasses);//4
 
-//At the beginning of a semester
-Semester createSemester();
+//At the beginning of a semester, an academic staff member can:
+Semester createSemester();//6
 CourseNode* createCourseNode();
 void addAfterCourseList(CourseList& lst, CourseNode* node);
-void addCourseToSemester(Semester& sem);
+void addCourseToSemester(Semester& sem);//7
+void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course);//8
+void viewListOfCourse(CourseList listOfCourse);//9
+void updateCourseInfo(CourseList& listOfCourse);//10
+void addStudentToCourse(CourseList& listOfCourse);//11
+void removeStudentFromStudentArr(Point*& scoreboard, int& n, int pos);
+void removeStudentFromCourse(CourseList& listOfCourse);//12
+void deleteACourse(CourseList& listOfCourse);//13
 
-void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course);
-void viewListOfCourse(CourseList listOfCourse);
-void addStudentToCourse(CourseList& listOfCourse);
-void updateCourseInfo(CourseList& listOfCourse);
-void removeStudentFromStudentArr(Point*& scoreboard, int n, int pos);
-void removeStudentFromCourse(CourseList& listOfCourse);
-void deleteACourse(CourseList& listOfCourse);
+//In a semester, a student still can:
+void viewListOfCourseByStudent(CourseList courseList, int id);//14
 
-void viewListOfClass(Classes* cls, int numOfClass);
-void viewStudentOfClass(Classes cls);
+//At any time, an academic staff member can:
+void viewListOfClasses(Classes* cls, int numOfClass);//15
+void viewStudentOfClass(Classes cls);//16
+void viewListOfCourse(const char fileName[], CourseList courseList);//17
+void viewListOfStudentInCourse(CourseList courseList);//18
 
 //At the end of a semester
-void exportListOfStudentToCsvFile(const char* file, Course course);
-void importScoreboard(const char* file, CourseList& listofcourse);
-void viewScoreboard(Course course);
+void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse);//19
+void importScoreboard(const char* file, CourseList& listofcourse);//20
+void viewScoreboard(Course course);//21
 
-#endif
+#endif	
