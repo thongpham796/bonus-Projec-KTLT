@@ -25,16 +25,17 @@ int main()
 				//class 20CLC1..., class 20CLC11, class 20VP...
 				Classes* cls;
 				int num = 0;
-				char fileName2[] = "listStudents.csv";
 				createSeveralClasses(cls, num);
-				addStudentToClassesFromCsvFile(fileName2, cls, num);
+				addStudentToClassesFromCsvFile("listStudents23CTT3.csv", cls, num);
+				addStudentToClassesFromCsvFile("listStudents23CTT4.csv", cls, num);
+				addStudentToClassesFromCsvFile("listStudents23CTT5.csv", cls, num);
 				viewListOfClasses(cls, num);
 				for (int i = 0; i < num; i++)
 				{
 					viewStudentOfClass(cls[i]);
 				}
 				//3. Add new 1st year students to 1st-year classes.
-				addNewStudentToClasses(fileName2);
+				addNewStudentToClasses("listStudents23CTT5.csv");
 
 				//4. For quick input, he / she can import a CSV file containing all students in a specific class to
 				//the system, instead of adding one by one : No, Student ID, First name, Last name,

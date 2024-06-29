@@ -1,23 +1,34 @@
 #include "Header.h"
 
-//19. Export a list of Student to CSV file
-void exportListOfStudentToCsvFile(const char* file, Course course)
-{
-	ofstream wfile;
-	wfile.open(file);
-	if (!wfile.is_open())
-	{
-		cout << "File error!!" << endl;
-		return;
+//19. Export a list of students in a course to a CSV file.
+void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse) {
+	int no;
+	string id;
+	cout << "Some information of course you want to export to CSV file: ";
+	cout << "Enter semester ordinal number in course: ";
+	cin >> no;
+	cout << "Enter course id: ";
+	cin >> id;
+	CourseNode* tmp = listOfCourse.pHead;
+	while (tmp != NULL) {
+		if (tmp->course.courseId == id) {
+			string fileName = "studentInCourse" + tmp->course.courseId + "NeedPoint.csv";
+			ofstream wfile;
+			wfile.open(fileName, ios::app);
+			if (!wfile.is_open()) {
+				cout << "File error!" << endl;
+				return;
+			}
+			wfile << tmp->course.courseId<<","<<tmp->course.numOfStudent << endl;
+			wfile << "Student id" << "," << "Student name" << endl;
+			for (int i = 0; i < tmp->course.numOfStudent; i++) {
+				wfile << tmp->course.scoreboard[i].s.no << "," << tmp->course.scoreboard[i].s.studentId << "," << tmp->course.scoreboard[i].s.firstName << " " << tmp->course.scoreboard[i].s.lastName << endl;
+			}
+		}
+		tmp = tmp->pNext;
 	}
-	wfile << course.courseId << "," << course.courseName << "," << course.className << "," << course.teacherName << ",";
-	wfile << course.numberOfCredit << "," << course.numOfStudent << "/" << course.maximumNumberOfStudent << "," << course.dayOfWeek << ",";
-	wfile << course.session.classPeriod << "/" << course.session.dayOfWeek << endl;
-	for (int i = 0; i < course.numOfStudent; i++)
-		wfile << course.scoreboard[i].s.no << "," << course.scoreboard[i].s.studentId << "," << course.scoreboard[i].s.firstName << "," << course.scoreboard[i].s.lastName << "," << course.scoreboard[i].s.gender << endl;
-	wfile.flush();
-	wfile.close();
 }
+
 
 //20. Import the scoreboard of a course.A scoreboard will have at least the following
 //columns : No, Student ID, Student Full Name, Total Mark, Final Mark, Midterm Mark, and
@@ -38,6 +49,7 @@ void importScoreboard(const char* file, CourseList*& listofcourse)
 	stringstream linetemp(temp);
 	string id;
 	getline(linetemp, id, ',');
+	getline(rfile, temp);
 	CourseNode* n = listofcourse->pHead;
 	while (n != NULL)
 	{
@@ -49,8 +61,6 @@ void importScoreboard(const char* file, CourseList*& listofcourse)
 			{
 				stringstream linestream(line);
 				string value;
-				getline(linestream, value, ',');
-				getline(linestream, value, ',');
 				getline(linestream, value, ',');
 				getline(linestream, value, ',');
 				getline(linestream, value, ',');

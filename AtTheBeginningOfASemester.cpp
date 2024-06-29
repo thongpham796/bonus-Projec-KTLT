@@ -590,30 +590,3 @@ void viewListOfStudentInCourse(CourseList courseList)
 	}
 }
 
-//19. Export a list of students in a course to a CSV file.
-void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse) {
-	int no;
-	string id;
-	cout << "Some information of course you want to export to CSV file: ";
-	cout << "Enter semester ordinal number in course: ";
-	cin >> no;
-	cout << "Enter course id: ";
-	cin >> id;
-	CourseNode* tmp = listOfCourse.pHead;
-	while (tmp != NULL) {
-		if (tmp->course.courseId == id) {
-			string fileName = "Student list - " + tmp->course.courseId + ".csv";
-			ofstream wfile;
-			wfile.open(fileName, ios::app);
-			if (!wfile.is_open()) {
-				cout << "File error!" << endl;
-				return;
-			}
-			wfile << "Student id" << "," << "Student name" << endl;
-			for (int i = 0; i < tmp->course.scoreboard[i].s.studentId; i++) {
-				wfile << tmp->course.scoreboard[i].s.studentId << "," << tmp->course.scoreboard[i].s.lastName << " " << tmp->course.scoreboard[i].s.lastName << endl;
-			}
-		}
-		tmp = tmp->pNext;
-	}
-}
