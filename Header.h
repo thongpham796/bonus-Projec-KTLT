@@ -197,5 +197,8 @@ void viewListOfStudentInCourse(CourseList courseList);//18
 void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse);//19
 void importScoreboard(const char* file, CourseList& listofcourse);//20
 void viewScoreboard(Course course);//21
+void updateResult(CourseList& List);//22
+double findGPAOfAStudent(int MSSV, Semester sem);
+void findGPAOfClass(Classes* cls, int numOfClass, Semester sem);//23
 
 #endif

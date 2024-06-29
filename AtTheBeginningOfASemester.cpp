@@ -374,9 +374,11 @@ void addStudentToCourse(CourseList& listOfCourse) {
 	cout << "Enter Student ID: ";
 	cin >> st.studentId;
 	cout << "Enter Firstname: ";
-	cin >> st.firstName;
+	cin.ignore();
+	getline(cin,st.firstName);
 	cout << "Enter Lastname: ";
-	cin >> st.lastName;
+	cin.ignore(0);
+	getline(cin,st.lastName);
 	cout << "Enter Gender: ";
 	cin >> st.gender;
 	cout << "Enter Date of Birth: " << endl;

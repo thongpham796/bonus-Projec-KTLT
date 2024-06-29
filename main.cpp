@@ -152,6 +152,15 @@ int main()
 
 						//19. Export a list of students in a course to a CSV file
 						exportListOfStudentsInCourseToCSVFile(sem.listOfCourse);
+
+						//20.
+						importScoreboard("studentInCourse23A001NeedPoint.csv", sem.listOfCourse);
+
+						//22.
+						updateResult(sem.listOfCourse);
+
+						//23.
+						findGPAOfClass(cls,num, sem);
 					}
 					else if (choice == 4) {
 						continue;

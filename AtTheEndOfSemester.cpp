@@ -18,7 +18,7 @@ void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse) {
 				return;
 			}
 			wfile << tmp->course.courseId << "," << tmp->course.numOfStudent << endl;
-			wfile << "Student id" << "," << "Student name" << endl;
+			wfile << "No"<<","<<"Student id" << ", " << "Student name" << endl;
 			for (int i = 0; i < tmp->course.numOfStudent; i++) {
 				wfile << tmp->course.scoreboard[i].s.no << "," << tmp->course.scoreboard[i].s.studentId << "," << tmp->course.scoreboard[i].s.firstName << " " << tmp->course.scoreboard[i].s.lastName << endl;
 			}
@@ -33,7 +33,7 @@ void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse) {
 //Other Mark.(An academic staff member will export the list of students in a course, and
 //send the CSV file to the teacher, the teacher will enter student results in this file, send it
 //back to the staff, and then the staff will import the scoreboard to the system)
-void importScoreboard(const char* file, CourseList*& listofcourse)
+void importScoreboard(const char* file, CourseList& listofcourse)
 {
 	ifstream rfile;
 	rfile.open(file);
@@ -48,7 +48,7 @@ void importScoreboard(const char* file, CourseList*& listofcourse)
 	string id;
 	getline(linetemp, id, ',');
 	getline(rfile, temp);
-	CourseNode* n = listofcourse->pHead;
+	CourseNode* n = listofcourse.pHead;
 	while (n != NULL)
 	{
 		if (id == n->course.courseId)
@@ -85,17 +85,38 @@ void viewScoreboard(Course course)
 
 }
 
-void updateResult(Point& s)
+void updateResult(CourseList &List)
 {
-	cout << "Input new point: \n";
-	cout << "Input homework point: ";
-	cin >> s.homework;
-	cout << "Input midterm point: ";
-	cin >> s.midterm;
-	cout << "Input final point: ";
-	cin >> s.final;
-	s.total = s.homework * 20 / 100 + s.midterm * 30 / 100 + s.final * 50 / 100;
-	cout << "Total point: " << s.total;
+	CourseNode* temp = List.pHead;
+	string id;
+	cout << "Input course id that you want to update result: \n";
+	cin >> id;
+	while (temp != NULL)
+	{
+		if (temp->course.courseId == id)
+		{
+			Course c = temp->course;
+			cout << "Input student id that you want to update result: \n";
+			int sid;
+			cin >> sid;
+			for (int i = 0; i < c.numOfStudent; i++)
+			{
+				if (c.scoreboard[i].s.studentId == sid)
+				{
+					Point s=c.scoreboard[i];
+					cout << "Input new point: \n";
+					cout << "Input homework point: ";
+					cin >> s.homework;
+					cout << "Input midterm point: ";
+					cin >> s.midterm;
+					cout << "Input final point: ";
+					cin >> s.final;
+					s.total = s.homework * 20 / 100 + s.midterm * 30 / 100 + s.final * 50 / 100;
+					cout << "Total point: " << s.total;
+				}
+			}
+		}
+	} 
 }
 
 double findGPAOfAStudent(int MSSV, Semester sem)
@@ -119,11 +140,20 @@ double findGPAOfAStudent(int MSSV, Semester sem)
 	return point / count;
 }
 
-void findGPAOfClass(Classes cls, Semester sem)
+void findGPAOfClass(Classes *cls, int numOfClass, Semester sem)
 {
-	for (int a = 1; a < cls.numOfStudent; a++)
+	string clsname;
+	cout << "Input class you that you want to show GPA: ";
+	cin >> clsname;
+	for (int i = 0; i < numOfClass; i++)
 	{
-		cout << findGPAOfAStudent(cls.student[a].studentId, sem);
+		if (cls[i].className == clsname)
+		{
+			for (int a = 1; a < cls[i].numOfStudent; a++)
+			{
+				cout << findGPAOfAStudent(cls[i].student[a].studentId, sem);
+			}
+		}
 	}
 }
 
