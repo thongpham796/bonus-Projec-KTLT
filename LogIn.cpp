@@ -132,8 +132,26 @@ StudentUserNode* hasStudentUser(string username, string password)
 	}
 	StudentUser temp;
 	string line;
-	while (file >> temp.username >> temp.password >> temp.student.no >> temp.student.studentId >> temp.student.socialId >> temp.student.firstName >> temp.student.lastName >> temp.student.gender >> temp.student.dateOfBirth.day >> temp.student.dateOfBirth.month >> temp.student.dateOfBirth.year >> temp.student.yearNumber >> temp.student.placeOfBirth) {
-		getline(file, line);
+	string value;
+	while (getline(file, temp.username)) {
+		getline(file, temp.password);
+		getline(file, value);
+		temp.student.no = stoi(value);
+		getline(file, value);
+		temp.student.studentId = stoi(value);
+		getline(file, temp.student.socialId);
+		getline(file, temp.student.firstName);
+		getline(file, temp.student.lastName);
+		getline(file, temp.student.gender);
+		getline(file, value);
+		temp.student.dateOfBirth.day = stoi(value);
+		getline(file, value);
+		temp.student.dateOfBirth.month = stoi(value);
+		getline(file, value);
+		temp.student.dateOfBirth.year = stoi(value);
+		getline(file, value);
+		temp.student.yearNumber = stoi(value);
+		getline(file, temp.student.placeOfBirth);
 		if (temp.username == username && temp.password == password) {
 			file.close();
 			return createStudentUserNode(temp);
@@ -191,9 +209,11 @@ void sighUpAsAStudent()
 	cout << "Enter social id: ";
 	cin >> s.student.socialId;
 	cout << "Enter firstname: ";
-	cin >> s.student.firstName;
+	cin.ignore();
+	getline(cin,s.student.firstName);
 	cout << "Enter lastname: ";
-	cin >> s.student.lastName;
+	cin.ignore();
+	getline(cin,s.student.lastName);
 	cout << "Enter gender: ";
 	cin >> s.student.gender;
 	cout << "Enter date of birth: " << endl;
@@ -206,7 +226,8 @@ void sighUpAsAStudent()
 	cout << "Enter yearNumber: ";
 	cin >> s.student.yearNumber;
 	cout << "Enter place of birth: ";
-	cin >> s.student.placeOfBirth;
+	cin.ignore();
+	getline(cin,s.student.placeOfBirth);
 
 	//Add student user to text file
 	fileName = "studentUser.txt";
@@ -216,7 +237,7 @@ void sighUpAsAStudent()
 		cout << "File error!"<<endl;
 		return;
 	}
-	writeFile << s.username << " " << s.password << " " << s.student.no << " " << s.student.studentId << " " << s.student.socialId << " " << s.student.firstName << " " << s.student.lastName << " " << s.student.gender << " " << s.student.dateOfBirth.day << " " << s.student.dateOfBirth.month << " " << s.student.dateOfBirth.year << " " << s.student.yearNumber << " " << s.student.placeOfBirth << "\n";
+	writeFile << s.username << endl << s.password << endl << s.student.no << endl << s.student.studentId << endl << s.student.socialId << endl << s.student.firstName << endl << s.student.lastName << endl << s.student.gender << endl << s.student.dateOfBirth.day << endl << s.student.dateOfBirth.month << endl << s.student.dateOfBirth.year << endl << s.student.yearNumber << endl << s.student.placeOfBirth << "\n";
 	writeFile.close();
 }
 //Function to view user profile
@@ -262,9 +283,23 @@ AcademicStaffUserNode* hasAcademicUserNode(string username, string password)
 		cout << "File error!" << endl;
 		return NULL;
 	}
-	string line;
-	while (rfile >> asu.username >> asu.password >> asu.academicStaff.staffId >> asu.academicStaff.socialId >> asu.academicStaff.firstName >> asu.academicStaff.lastName >> asu.academicStaff.gender >> asu.academicStaff.dateOfBirth.day >> asu.academicStaff.dateOfBirth.month >> asu.academicStaff.dateOfBirth.year >> asu.academicStaff.placeOfBirth) {
-		getline(rfile, line);
+	string value;
+	while (getline(rfile, asu.username)) {
+		getline(rfile, asu.password);
+		getline(rfile, value);
+		asu.academicStaff.staffId = stoi(value);
+		getline(rfile, asu.academicStaff.socialId);
+		getline(rfile, asu.academicStaff.firstName);
+		getline(rfile, asu.academicStaff.lastName);
+		getline(rfile, asu.academicStaff.gender);
+		getline(rfile, value);
+		asu.academicStaff.dateOfBirth.day = stoi(value);
+		getline(rfile, value);
+		asu.academicStaff.dateOfBirth.month = stoi(value);
+		getline(rfile, value);
+		asu.academicStaff.dateOfBirth.year = stoi(value);
+		getline(rfile, asu.academicStaff.placeOfBirth);
+
 		if (asu.username == username && asu.password == password) {
 			rfile.close();
 			return createAcademicStaffUserNode(asu);
@@ -315,9 +350,11 @@ void sighUpAsAAcademicStaff() {
 	cout << "Enter social id: ";
 	cin >> a.academicStaff.socialId;
 	cout << "Enter first name: ";
-	cin >> a.academicStaff.firstName;
+	cin.ignore();
+	getline(cin, a.academicStaff.firstName);
 	cout << "Endter last name: ";
-	cin >> a.academicStaff.lastName;
+	cin.ignore();
+	getline(cin, a.academicStaff.lastName);
 	cout << "Enter gender: ";
 	cin >> a.academicStaff.gender;
 	cout << "Enter date of birth: " << endl;
@@ -328,7 +365,8 @@ void sighUpAsAAcademicStaff() {
 	cout << "Enter year: ";
 	cin >> a.academicStaff.dateOfBirth.year;
 	cout << "Enter place of birth: ";
-	cin >> a.academicStaff.placeOfBirth;
+	cin.ignore();
+	getline(cin, a.academicStaff.placeOfBirth);
 
 	//Add academic staff user to text file
 	string fileName = "academicStaffUser.txt";
@@ -339,7 +377,7 @@ void sighUpAsAAcademicStaff() {
 		cout << "File error!" << endl;
 		return;
 	}
-	writeFile << a.username << " " << a.password << " " << a.academicStaff.staffId << " " << a.academicStaff.socialId << " " << a.academicStaff.firstName << " " << a.academicStaff.lastName << " " << a.academicStaff.gender << " " << a.academicStaff.dateOfBirth.day << " " << a.academicStaff.dateOfBirth.month << " " << a.academicStaff.dateOfBirth.year << " " << a.academicStaff.placeOfBirth << endl;
+	writeFile << a.username << endl << a.password << endl << a.academicStaff.staffId << endl << a.academicStaff.socialId << endl << a.academicStaff.firstName << endl << a.academicStaff.lastName << endl << a.academicStaff.gender << endl << a.academicStaff.dateOfBirth.day << endl << a.academicStaff.dateOfBirth.month << endl << a.academicStaff.dateOfBirth.year << endl << a.academicStaff.placeOfBirth << endl;
 	writeFile.close();
 }
 

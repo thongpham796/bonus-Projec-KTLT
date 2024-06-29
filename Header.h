@@ -86,16 +86,53 @@ struct Classes {
 	string className;
 	int yearNumber; // 1st-year students, 2st-year student,...
 };
+
 struct Session {
 	string dayOfWeek; // Ex: MON, TUE,...
 	string classPeriod;	//Ex: S1(7:30), S2(9:30),...
 };
 
-//Log in and sign up
+//Create scoreboard of a student
+struct Point {
+	Student s;
+	double homework;
+	double midterm;
+	double final;
+	double total = homework * 20 / 100 + midterm * 30 / 100 + final * 50 / 100;
+};
+
+//Create list of courses
+struct Course {
+	string courseId;
+	string courseName;
+	string className;
+	string teacherName;
+	int numberOfCredit;
+	int maximumNumberOfStudent = 50;
+	string dayOfWeek;
+	Session session;
+	int numOfStudent = 0;
+	Point* scoreboard = NULL;
+};
+struct CourseNode {
+	Course course;
+	CourseNode* pNext;
+};
+struct CourseList {
+	CourseNode* pHead;
+};
+struct Semester {
+	int semOrdiNum; // semester ordinal number
+	string schoolYear;
+	Date startDate;
+	Date endDate;
+	CourseList listOfCourse;
+};
+
 void initList(StudentUserList& l);
 void initList(AcademicStaffUserList& l);
 
-StudentUserNode* inputStudentUser(StudentUserList &list);
+StudentUserNode* inputStudentUser(StudentUserList& list);
 StudentUserNode* hasStudentUser(string username, string password);
 StudentUserNode* createStudentUserNode(StudentUser su);
 void addTail(StudentUserList& sul, StudentUserNode* node);
@@ -112,48 +149,9 @@ void viewProfile(AcademicStaffUser au);
 void changeStudentUserPassword(StudentUserNode*& node, StudentUserList& list);
 void changeAcademicStaffUserPassword(AcademicStaffUserNode* node, AcademicStaffUserList& list);
 
-//Create scoreboard of a student
-struct Point {
-	Student s;
-	double homework;
-	double midterm;
-	double final;
-	double total = homework * 20 / 100 + midterm * 30 / 100 + final * 50 / 100;
-};
-
-
-//Create list of courses
-struct Course {
-	int courseId;
-	string courseName;
-	string className;
-	string teacherName;
-	int numberOfCredit;
-	int maximumNumberOfStudent = 50;
-	int dayOfWeek;
-	Session session;
-	int numOfStudent;
-	Student* student;
-	Point* scoreboard;
-};
-struct Node {
-	Course course;
-	Node* pNext;
-};
-struct List {
-	Node* pHead;
-};
-struct Semester {
-	int semOrdiNum; // semester ordinal number
-	string schoolYear;
-	Date startDate;
-	Date endDate;
-	List listOfCourse;
-};
-
 struct SchoolYear {
 	string nameOfSY;
-	List semesters;
+	CourseList semesters;
 };
 
 // Log in system:
@@ -166,25 +164,38 @@ struct SchoolYear {
 // Student sẽ xuất như sau: 
 // 1 hàm để đọc dữ liệu trong csv
 
-string createSchoolYear();
-void createSeveralClasses(Classes*& cls, int& numOfClasses);
+//At the beginning of a school year (often in September)
+string createSchoolYear(); //1
+void createSeveralClasses(Classes*& cls, int& numOfClasses);//2
 void addStudentToCSVFile(const char* fileName, Student st);
-void addNewStudentToClasses();
-void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numOfClasses);
+void addNewStudentToClasses(const char* fileName);//3
+void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numOfClasses);//4
 
-Semester createSemester();
-Node* createNode();
-void addAfterCourseList(List& lst, Node* node);
-void addCourseToSemester(Semester& sem);
+//At the beginning of a semester, an academic staff member can:
+Semester createSemester();//6
+CourseNode* createCourseNode();
+void addAfterCourseList(CourseList& lst, CourseNode* node);
+void addCourseToSemester(Semester& sem);//7
+void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course);//8
+void viewListOfCourse(CourseList listOfCourse);//9
+void updateCourseInfo(CourseList& listOfCourse);//10
+void addStudentToCourse(CourseList& listOfCourse);//11
+void removeStudentFromStudentArr(Point*& scoreboard, int& n, int pos);
+void removeStudentFromCourse(CourseList& listOfCourse);//12
+void deleteACourse(CourseList& listOfCourse);//13
 
-void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course);
-void addStudentToCourse(Course& course);
+//In a semester, a student still can:
+void viewListOfCourseByStudent(CourseList courseList, int id);//14
 
-void viewListOfClass(Classes* cls, int numOfClass);
-void viewStudentOfClass(Classes cls);
+//At any time, an academic staff member can:
+void viewListOfClasses(Classes* cls, int numOfClass);//15
+void viewStudentOfClass(Classes cls);//16
+void viewListOfCourse(const char fileName[], CourseList courseList);//17
+void viewListOfStudentInCourse(CourseList courseList);//18
 
-void exportListOfStudentsInCourseToCSVFile(const char fileName[], List listOfCourses);
-void importScoreboard(const char* file, List*& listofcourse);
-void viewScoreboard(Course course);
+//At the end of a semester
+void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse);//19
+void importScoreboard(const char* file, CourseList& listofcourse);//20
+void viewScoreboard(Course course);//21
 
 #endif
