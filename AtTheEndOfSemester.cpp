@@ -1,5 +1,22 @@
 #include "Header.h"
 
+//19. Export a list of students in a course to a CSV file
+void exportListOfStudentsInCourseToCSVFile(const char fileName[], List listOfCourses) {
+	int no;
+	string schoolYear, id;
+	cout << "Some information of course you want to export to CSV file: ";
+	cout << "Enter school year: ";
+	cin >> schoolYear;
+	cout << "Enter semester ordinal number in course: ";
+	cin >> no;
+	cout << "Enter course id: ";
+	cin >> id;
+	Node* tmp = listOfCourses.pHead;
+	while (tmp != NULL) {
+
+		tmp = tmp->pNext;
+	}
+}
 void exportListOfStudentToCsvFile(const char* file, Course course)
 {
 	ofstream wfile;
@@ -18,7 +35,7 @@ void exportListOfStudentToCsvFile(const char* file, Course course)
 	wfile.close();
 }
 
-void importScoreboard(const char* file, List* &listofcourse)
+void importScoreboard(const char* file, List*& listofcourse)
 {
 	ifstream rfile;
 	rfile.open(file);

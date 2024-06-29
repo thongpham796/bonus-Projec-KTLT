@@ -14,7 +14,7 @@ string createSchoolYear() {
 
 //2. Create several classes for 1st-year students. For example: class 20APCS1, class 20APCS2,
 //class 20CLC1..., class 20CLC11, class 20VP...
-void createSeveralClasses(Classes *&cls, int& numOfClasses) {
+void createSeveralClasses(Classes*& cls, int& numOfClasses) {
 	cout << "The number of several classes for 1st-year students you want to create: ";
 	cin >> numOfClasses;
 	cls = new Classes[numOfClasses];
@@ -85,14 +85,14 @@ void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numO
 	getline(linetemp, num, ',');
 	numOfStudent = stoi(num);
 	int i = 0;
-	while (i<numOfClasses)
+	while (i < numOfClasses)
 	{
 		if (cls[i].className == classtemp)
 		{
 			cls[i].student = new Student[numOfStudent];
 			string line;
 			int j = 0;
-			while (getline(file,line))
+			while (getline(file, line))
 			{
 				stringstream linestream(line);
 				string value;
@@ -114,7 +114,7 @@ void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numO
 				cls[i].student[j].dateOfBirth.year = stoi(value);
 				getline(linestream, value, ',');
 				cls[i].student[j].socialId = value;
-				getline(linestream, value,' ');
+				getline(linestream, value, ' ');
 				cls[i].student[j].yearNumber = stoi(value);
 				j++;
 			}
@@ -123,7 +123,7 @@ void addStudentToClassesFromCsvFile(const char* filename, Classes* cls, int numO
 			cout << "Write file successful!!" << endl;
 			return;
 		}
-		i++;	
+		i++;
 	}
 	cout << "The class doesn't exist!!" << endl;
 	file.close();
@@ -307,28 +307,10 @@ void viewStudentOfClass(Classes cls)
 	{
 		cout << cls.student[i].no << " " << cls.student[i].studentId << " ";
 		cout << cls.student[i].firstName << " " << cls.student[i].lastName << " ";
-		cout << cls.student[i].gender<<" ";
+		cout << cls.student[i].gender << " ";
 		cout << cls.student[i].dateOfBirth.day << "/" << cls.student[i].dateOfBirth.month << "/" << cls.student[i].dateOfBirth.year << " ";
 		cout << cls.student[i].socialId << " ";
 		cout << cls.student[i].yearNumber;
 		cout << endl;
-	}
-}
-
-//19. Export a list of students in a course to a CSV file
-void exportListOfStudentsInCourseToCSVFile(const char fileName[], List listOfCourses) {
-	int no;
-	string schoolYear, id;
-	cout << "Some information of course you want to export to CSV file: ";
-	cout << "Enter school year: ";
-	cin >> schoolYear;
-	cout << "Enter semester ordinal number in course: ";
-	cin >> no;
-	cout << "Enter course id: ";
-	cin >> id;
-	Node* tmp = listOfCourses.pHead;
-	while (tmp != NULL) {
-
-		tmp = tmp->pNext;
 	}
 }
