@@ -16,7 +16,7 @@ int main()
                    | |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '_ ` _ \ / _ \ '_ \| __|  / _ \| |
                    | |  | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_  | (_) |  _|
                    |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_| |_| |_|\___|_| |_|\__|  \____|_|
-                               \___/   
+                                             \___/   
                                                 ___________ __ __
                                                |_   _/ _ \| |/ /
                                                  | || | | | ' /
@@ -28,7 +28,7 @@ int main()
 	initList(asul);
 	StudentUserList sul;
 	initList(sul);
-
+	Semester sem;
 	while (1) {
 		//Option: Log in or Sign up
 		menu();
@@ -77,35 +77,35 @@ int main()
 						break;
 					}
 					else if (choice == 3) {
-						//1. Create a school year(2020 - 2021, for example)
-				/*string schoolYear = createSchoolYear();
-				cout << "School year: " << schoolYear << endl;*/
+				//		//1. Create a school year(2020 - 2021, for example)
+				///*string schoolYear = createSchoolYear();
+				//cout << "School year: " << schoolYear << endl;*/
 
-				//2. Create several classes for 1st - year students. For example : class 20APCS1, class 20APCS2,
-				//class 20CLC1..., class 20CLC11, class 20VP...
-						Classes* cls;
-						int num = 0;
-						createSeveralClasses(cls, num);
-						addStudentToClassesFromCsvFile("listStudents23CTT3.csv", cls, num);
-						addStudentToClassesFromCsvFile("listStudents23CTT4.csv", cls, num);
-						addStudentToClassesFromCsvFile("listStudents23CTT5.csv", cls, num);
-						viewListOfClasses(cls, num);
-						for (int i = 0; i < num; i++)
-						{
-							viewStudentOfClass(cls[i]);
-						}
-						//3. Add new 1st year students to 1st-year classes.
-						addNewStudentToClasses("listStudents.csv");
+				////2. Create several classes for 1st - year students. For example : class 20APCS1, class 20APCS2,
+				////class 20CLC1..., class 20CLC11, class 20VP...
+				//		Classes* cls;
+				//		int num = 0;
+				//		createSeveralClasses(cls, num);
+				//		addStudentToClassesFromCsvFile("listStudents23CTT3.csv", cls, num);
+				//		addStudentToClassesFromCsvFile("listStudents23CTT4.csv", cls, num);
+				//		addStudentToClassesFromCsvFile("listStudents23CTT5.csv", cls, num);
+				//		viewListOfClasses(cls, num);
+				//		for (int i = 0; i < num; i++)
+				//		{
+				//			viewStudentOfClass(cls[i]);
+				//		}
+				//		//3. Add new 1st year students to 1st-year classes.
+				//		addNewStudentToClasses("listStudents.csv");
 
-						//4. For quick input, he / she can import a CSV file containing all students in a specific class to
-						//the system, instead of adding one by one : No, Student ID, First name, Last name,
-						//Gender, Date of Birth, and Social ID.
+				//		//4. For quick input, he / she can import a CSV file containing all students in a specific class to
+				//		//the system, instead of adding one by one : No, Student ID, First name, Last name,
+				//		//Gender, Date of Birth, and Social ID.
 
 
 						//6. Create a semester: 1, 2, or 3, school year, start date, end date. Choose the school year
 						//	that the newly created semester belongs to.The created semester will be the current /
 						//	default semester for all the below actions.
-						Semester sem = createSemester();
+						sem = createSemester();
 
 						//7. Add a course to this semester: course id, course name, class name, teacher name,
 						//number of credits, the maximum number of students in the course(default 50), day of
@@ -116,51 +116,57 @@ int main()
 						addCourseToSemester(sem);
 
 						//8. Then he/she will upload a CSV file, containing a list of students enrolled in the course.
-						char fileName8[] = "studentInCourse.csv";
-						addStudentToCourse(sem.listOfCourse);
-						uploadCSVFileContainingListStudentInCourse(fileName8, sem.listOfCourse.pHead->course);
+						char fileName8[] = "studentInCourse23A001.csv";
+						uploadCSVFileContainingListStudentInCourse(fileName8, sem.listOfCourse);
 
-						//9. View the list of courses.
-						viewListOfCourse(sem.listOfCourse);
+						////9. View the list of courses.
+						//viewListOfCourse(sem.listOfCourse);
 
-						//10. Update course information.
-						updateCourseInfo(sem.listOfCourse);
-						viewListOfCourse(sem.listOfCourse);
+						////10. Update course information.
+						//updateCourseInfo(sem.listOfCourse);
+						//viewListOfCourse(sem.listOfCourse);
 
-						//11. Add a student to the course.
-						addStudentToCourse(sem.listOfCourse);
-						addStudentToCourse(sem.listOfCourse);
+						////11. Add a student to the course.
+						//addStudentToCourse(sem.listOfCourse);
+						//addStudentToCourse(sem.listOfCourse);
 
-						//12. Remove a student from the course.
-						removeStudentFromCourse(sem.listOfCourse);
+						////12. Remove a student from the course.
+						//removeStudentFromCourse(sem.listOfCourse);
 
-						//13. Delete a course.
-						deleteACourse(sem.listOfCourse);
-						viewListOfCourse(sem.listOfCourse);
+						////13. Delete a course.
+						//deleteACourse(sem.listOfCourse);
+						//viewListOfCourse(sem.listOfCourse);
 
-						//15. View a list of classes.
-						viewListOfClasses(cls, num);
+						////15. View a list of classes.
+						//viewListOfClasses(cls, num);
 
-						//16. View a list of students in a class (for example, 20APCS1...)
-						viewStudentOfClass(cls[0]);
+						////16. View a list of students in a class (for example, 20APCS1...)
+						//viewStudentOfClass(cls[0]);
 
-						//17. View a list of courses.
-						viewListOfCourse(sem.listOfCourse);
+						////17. View a list of courses.
+						//viewListOfCourse(sem.listOfCourse);
 
-						//18. View a list of students in a course
-						viewListOfStudentInCourse(sem.listOfCourse);
+						////18. View a list of students in a course
+						//viewListOfStudentInCourse(sem.listOfCourse);
 
 						//19. Export a list of students in a course to a CSV file
-						exportListOfStudentsInCourseToCSVFile(sem.listOfCourse);
-
+						string csvid;
+						cout << "Some information of course you want to export to CSV file: " << endl;
+						cout << "Enter course id: ";
+						cin >> csvid;
+						exportListOfStudentsInCourseToCSVFile(sem.listOfCourse,csvid);
+						int stop;
+						cout << "Press any number and enter to continue !\n";
+						cin>>stop;
+						
 						//20.
-						importScoreboard("studentInCourse23A001NeedPoint.csv", sem.listOfCourse);
+						importScoreboard(csvid, sem.listOfCourse);
 
 						//22.
 						updateResult(sem.listOfCourse);
 
-						//23.
-						findGPAOfClass(cls,num, sem);
+						////23.
+						//findGPAOfClass(cls,num, sem);
 					}
 					else if (choice == 4) {
 						continue;
@@ -177,6 +183,7 @@ int main()
 				else if (a == 2) {
 					StudentUserNode* node = inputStudentUser(sul);
 					viewProfile(node->su);
+					viewScoreboard(node, sem);
 				}
 				else {
 					cout << "Our program doesn't support this option, please enter 1 or enter 2\n";

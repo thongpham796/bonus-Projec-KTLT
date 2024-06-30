@@ -98,7 +98,7 @@ struct Point {
 	double homework;
 	double midterm;
 	double final;
-	double total = homework * 20 / 100 + midterm * 30 / 100 + final * 50 / 100;
+	double total;
 };
 
 //Create list of courses
@@ -176,7 +176,7 @@ Semester createSemester();//6
 CourseNode* createCourseNode();
 void addAfterCourseList(CourseList& lst, CourseNode* node);
 void addCourseToSemester(Semester& sem);//7
-void uploadCSVFileContainingListStudentInCourse(const char fileName[], Course course);//8
+void uploadCSVFileContainingListStudentInCourse(const char fileName[], CourseList& course);//8
 void viewListOfCourse(CourseList listOfCourse);//9
 void updateCourseInfo(CourseList& listOfCourse);//10
 void addStudentToCourse(CourseList& listOfCourse);//11
@@ -194,11 +194,11 @@ void viewListOfCourse(const char fileName[], CourseList courseList);//17
 void viewListOfStudentInCourse(CourseList courseList);//18
 
 //At the end of a semester
-void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse);//19
-void importScoreboard(const char* file, CourseList& listofcourse);//20
+void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse, string id);//19
+void importScoreboard(string cid, CourseList& listOfCourse);//20
 void viewScoreboard(Course course);//21
 void updateResult(CourseList& List);//22
 double findGPAOfAStudent(int MSSV, Semester sem);
 void findGPAOfClass(Classes* cls, int numOfClass, Semester sem);//23
-
+void viewScoreboard(StudentUserNode* sun, Semester sem);//24
 #endif
