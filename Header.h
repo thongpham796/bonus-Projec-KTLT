@@ -2,6 +2,7 @@
 #define Header_h
 
 #include <Windows.h>
+#include<time.h>
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
@@ -98,7 +99,7 @@ struct Point {
 	double homework;
 	double midterm;
 	double final;
-	double total;
+	double total = homework * 20 / 100 + midterm * 30 / 100 + final * 50 / 100;
 };
 
 //Create list of courses
@@ -133,7 +134,7 @@ void initList(StudentUserList& l);
 void initList(AcademicStaffUserList& l);
 
 StudentUserNode* inputStudentUser(StudentUserList& list);
-StudentUserNode* hasStudentUser(string username, string password);
+StudentUserNode* hasStudentUser(string username, string password, StudentUserList& list);
 StudentUserNode* createStudentUserNode(StudentUser su);
 void addTail(StudentUserList& sul, StudentUserNode* node);
 void sighUpAsAStudent();
@@ -151,7 +152,7 @@ void changeAcademicStaffUserPassword(AcademicStaffUserNode* node, AcademicStaffU
 
 struct SchoolYear {
 	string nameOfSY;
-	CourseList semesters;
+	Semester semester;
 };
 
 // Log in system:
@@ -198,7 +199,8 @@ void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse, string id);/
 void importScoreboard(string cid, CourseList& listOfCourse);//20
 void viewScoreboard(Course course);//21
 void updateResult(CourseList& List);//22
-double findGPAOfAStudent(int MSSV, Semester sem);
+void findGPAOfAStudent(int MSSV, Semester sem);
 void findGPAOfClass(Classes* cls, int numOfClass, Semester sem);//23
 void viewScoreboard(StudentUserNode* sun, Semester sem);//24
+
 #endif

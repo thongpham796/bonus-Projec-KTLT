@@ -28,7 +28,6 @@ void createSeveralClasses(Classes*& cls, int& numOfClasses) {
 
 //3. Add new 1st year students to 1st-year classes.
 void addStudentToCSVFile(const char* fileName, Student st) {
-	cout << "Add new student to csv file: \n";
 	ofstream writeFile;
 	writeFile.open(fileName, ios::app);
 	if (!writeFile.is_open()) {
@@ -237,7 +236,7 @@ void addCourseToSemester(Semester& sem) {
 }
 
 //8. Then he/she will upload a CSV file, containing a list of students enrolled in the course.
-void uploadCSVFileContainingListStudentInCourse(const char fileName[], CourseList &course) {
+void uploadCSVFileContainingListStudentInCourse(const char fileName[], CourseList& course) {
 	ifstream file;
 	file.open(fileName);
 	if (!file.is_open())
@@ -255,7 +254,7 @@ void uploadCSVFileContainingListStudentInCourse(const char fileName[], CourseLis
 	getline(linetemp, num, ',');
 	numOfStudent = stoi(num);
 	CourseNode* c = course.pHead;
-	while (c!=NULL)
+	while (c != NULL)
 	{
 		if (c->course.courseId == coursetemp)
 		{
@@ -423,11 +422,9 @@ void addStudentToCourse(CourseList& listOfCourse) {
 	cout << "Enter Student ID: ";
 	cin >> st.studentId;
 	cout << "Enter Firstname: ";
-	cin.ignore();
-	getline(cin,st.firstName);
+	cin >> st.firstName;
 	cout << "Enter Lastname: ";
-	cin.ignore(0);
-	getline(cin,st.lastName);
+	cin >> st.lastName;
 	cout << "Enter Gender: ";
 	cin >> st.gender;
 	cout << "Enter Date of Birth: " << endl;
@@ -633,7 +630,7 @@ void viewListOfStudentInCourse(CourseList courseList)
 				cout << "Student ID: " << tmp->course.scoreboard[i].s.studentId << endl;
 				cout << "FullName: " << tmp->course.scoreboard[i].s.firstName << " " << tmp->course.scoreboard[i].s.lastName << endl;
 				cout << "Gender: " << tmp->course.scoreboard[i].s.gender << endl;
-				cout << "BirthDay: " << tmp->course.scoreboard[i].s.dateOfBirth.day << "/" << tmp->course.scoreboard->s.dateOfBirth.month << "/" << tmp->course.scoreboard->s.dateOfBirth.year << endl;
+				cout << "BirthDay: " << tmp->course.scoreboard[i].s.dateOfBirth.day << "/" << tmp->course.scoreboard[i].s.dateOfBirth.month << "/" << tmp->course.scoreboard[i].s.dateOfBirth.year << endl;
 				cout << "SocialID: " << tmp->course.scoreboard[i].s.socialId << endl;
 				cout << "YearNumber: " << tmp->course.scoreboard[i].s.yearNumber << endl;
 				cout << "************************************************" << endl;

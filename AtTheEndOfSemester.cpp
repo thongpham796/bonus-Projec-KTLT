@@ -6,7 +6,7 @@ void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse, string id) {
 	CourseNode* tmp = listOfCourse.pHead;
 	while (tmp != NULL) {
 		if (tmp->course.courseId == id) {
-			string fileName = "studentInCourse" + tmp->course.courseId + "NeedPoint.csv";
+			string fileName = "studentInCourse" + id + "NeedPoint.csv";
 			ofstream wfile;
 			wfile.open(fileName);
 			if (!wfile.is_open()) {
@@ -14,7 +14,7 @@ void exportListOfStudentsInCourseToCSVFile(CourseList listOfCourse, string id) {
 				return;
 			}
 			wfile << tmp->course.courseId << "," << tmp->course.numOfStudent << endl;
-			wfile << "No"<<","<<"Student id" << ", " << "Student name" << endl;
+			wfile << "No" << "," << "Student id" << ", " << "Student name" << endl;
 			for (int i = 0; i < tmp->course.numOfStudent; i++) {
 				wfile << tmp->course.scoreboard[i].s.no << "," << tmp->course.scoreboard[i].s.studentId << "," << tmp->course.scoreboard[i].s.firstName << " " << tmp->course.scoreboard[i].s.lastName << endl;
 			}
@@ -52,7 +52,7 @@ void importScoreboard(string cid, CourseList& listOfCourse)
 		{
 			string line;
 			int i = 0;
-			while (i<n->course.numOfStudent)
+			while (i < n->course.numOfStudent)
 			{
 				getline(rfile, line);
 				stringstream linestream(line);
@@ -85,7 +85,7 @@ void viewScoreboard(Course course)
 
 }
 
-void updateResult(CourseList &List)
+void updateResult(CourseList& List)
 {
 	CourseNode* temp = List.pHead;
 	string id;
@@ -103,7 +103,7 @@ void updateResult(CourseList &List)
 			{
 				if (c.scoreboard[i].s.studentId == sid)
 				{
-					Point s=c.scoreboard[i];
+					Point s = c.scoreboard[i];
 					cout << "Input new point: \n";
 					cout << "Input homework point: ";
 					cin >> s.homework;
@@ -117,11 +117,12 @@ void updateResult(CourseList &List)
 				}
 			}
 		}
-	} 
+	}
 }
 
-double findGPAOfAStudent(int MSSV, Semester sem)
+void findGPAOfAStudent(int MSSV, Semester sem)
 {
+	cout << MSSV << ":\n";
 	CourseNode* temp = sem.listOfCourse.pHead;
 	int count = 0;
 	double point = 0;
@@ -139,10 +140,10 @@ double findGPAOfAStudent(int MSSV, Semester sem)
 		}
 	}
 	cout << "The final GPA of this semester is: ";
-	return point / count;
+	cout << point / count << endl;
 }
 
-void findGPAOfClass(Classes *cls, int numOfClass, Semester sem)
+void findGPAOfClass(Classes* cls, int numOfClass, Semester sem)
 {
 	string clsname;
 	cout << "Input class you that you want to show GPA: ";
@@ -153,15 +154,15 @@ void findGPAOfClass(Classes *cls, int numOfClass, Semester sem)
 		{
 			for (int a = 1; a < cls[i].numOfStudent; a++)
 			{
-				cout << findGPAOfAStudent(cls[i].student[a].studentId, sem);
+				findGPAOfAStudent(cls[i].student[a].studentId, sem);
 			}
 		}
 	}
 }
 
 //24. View student's scoreboard
-void viewScoreboard(StudentUserNode *sun,Semester sem)
+void viewScoreboard(StudentUserNode* sun, Semester sem)
 {
 	int id = sun->su.student.studentId;
-	cout<< findGPAOfAStudent(id, sem);
+	findGPAOfAStudent(id, sem);
 }

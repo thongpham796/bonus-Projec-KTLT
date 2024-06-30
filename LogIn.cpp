@@ -74,9 +74,13 @@ void disableConsoleDragging() {
 void menu()
 {
 
+	textcolor(0x71);
 	cout << "What do you want to do ? \n";
+	textcolor(0x71);
 	cout << "1. Log in.\n";
+	textcolor(0x71);
 	cout << "2. Sign up.\n";
+	textcolor(0x71);
 	cout << "Enter number : ";
 }
 
@@ -104,15 +108,15 @@ StudentUserNode* inputStudentUser(StudentUserList &list)
 	cin >> username;
 	cout << "Password: ";
 	cin >> password;
-	while (hasStudentUser(username, password) == NULL) {
+	StudentUserNode* tmp = hasStudentUser(username, password, list);
+	while (tmp == NULL) {
 		cout << "The username or password you entered is invalid, please enter again!" << endl;
 		cout << "Username: ";
 		cin >> username;
 		cout << "Password: ";
 		cin >> password;
+		tmp = hasStudentUser(username, password, list);
 	}
-	StudentUserNode* tmp = hasStudentUser(username, password);
-	addTail(list, tmp);
 	return tmp;
 }
 
@@ -121,7 +125,7 @@ StudentUserNode* inputStudentUser(StudentUserList &list)
 //	cout << a.username << " " << a.password << endl;
 //}
 ////Function to check if student user is in the system (by username and password)
-StudentUserNode* hasStudentUser(string username, string password)
+StudentUserNode* hasStudentUser(string username, string password, StudentUserList& list)
 {
 	ifstream file;
 	string userFile = "studentUser.txt";
@@ -131,8 +135,8 @@ StudentUserNode* hasStudentUser(string username, string password)
 		return NULL;
 	}
 	StudentUser temp;
-	string line;
-	string value;
+	string line,  value;
+	StudentUserNode* node = NULL;
 	while (getline(file, temp.username)) {
 		getline(file, temp.password);
 		getline(file, value);
@@ -152,12 +156,14 @@ StudentUserNode* hasStudentUser(string username, string password)
 		getline(file, value);
 		temp.student.yearNumber = stoi(value);
 		getline(file, temp.student.placeOfBirth);
+
+		addTail(list, createStudentUserNode(temp));
 		if (temp.username == username && temp.password == password) {
-			file.close();
-			return createStudentUserNode(temp);
+			node = createStudentUserNode(temp);
 		}
 	}
-	return NULL;
+	file.close();
+	return node;
 }
 
 //Create student user node
@@ -309,7 +315,7 @@ AcademicStaffUserNode* hasAcademicUserNode(string username, string password)
 }
 
 //Create academic staff user node
-AcademicStaffUserNode* createAcademicStaffUserNode(AcademicStaffUser asu) {
+AcademicStaffUserNode* createAcademicStaffUserNode(AcademicStaffUser asu)	{
 	AcademicStaffUserNode* tmp = new AcademicStaffUserNode;
 	tmp->au.username = asu.username;
 	tmp->au.password = asu.password;
@@ -414,6 +420,7 @@ void changeStudentUserPassword(StudentUserNode* &node, StudentUserList& list) {
 	cin >> newPass;
 	tempnode->su.password = newPass;
 	cout << "Password has been changed to: " << tempnode->su.password << endl;
+	node->su.password = tempnode->su.password;
 }
 
 //Function to change academic staff user password
